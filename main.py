@@ -7,12 +7,11 @@ def main():
     try:
         client.start_chat()
         # Get the image - for now, we will just pick a random image from the images folder
-        # This part will be replaced by picking the image from the recaptcha website
+        # TODO: This should be replaced after downloading the images from the recaptcha website
         image_path = r"images/" + random.choice(os.listdir("images/"))
         print("Image path: ", image_path)
-        # Get the object
-        # Temporary hack - we will just use the image name to get the object
-        # This part will be replaced by picked the object from the recaptcha website
+        # Get the object - for now, we will just use the image name to get the object
+        # TODO: This part will be replaced by the picked the object from the recaptcha website
         image_name = os.path.basename(image_path)
         object = image_name.split("-")[0].replace(".jpg", "")
 

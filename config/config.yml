@@ -1,1 +1,5 @@
-prompt_template: "Divide this image into a {grid_size} grid (If the image does not contain a grid or the grid is not clear, just imagine that the image is seperated into equal squares according to the specified grid, and numbered from the top left square, going line by line, to the bottom right square). Identify all cells, by their numbers, that contain {object} (Even if the object is not very visible, or hidden by other objects). Provide a comma-separated list of cell numbers with no additional details."
+prompt-template: "Divide this image into a {grid_size} grid (If the image does not contain a grid or the grid is not clear, just imagine that the image is seperated into equal squares according to the specified grid, and numbered from the top left square, going line by line, to the bottom right square). Identify all cells, by their numbers, that contain {object} (Even if the object is not very visible, or hidden by other objects). Be accurate about the results, and make sure the numbers of the cells are correctly referring to the cells you want to send as a result. Provide a comma-separated list of cell numbers with no additional details (Only the numbers)."
+# Add your own chrome user data directory here 
+user-data-dir: "C:/Users/mouad/AppData/Local/Google/Chrome/User Data"
+# Add your own profile directory here
+profile-directory: "Profile 5"

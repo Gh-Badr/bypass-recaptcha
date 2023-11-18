@@ -1,4 +1,3 @@
-import yaml
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -7,9 +6,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-import win32clipboard
+from bot.utils import load_yaml_param, send_image_to_clipboard, wait_for_not_disabled
 from PIL import Image
-import io
 
 class GridVisionClient:
     def __init__(self):
@@ -17,36 +15,13 @@ class GridVisionClient:
         self.service = Service(executable_path=ChromeDriverManager().install())
         # Define the Chrome options
         chrome_options = Options()
-        chrome_options.add_argument("--user-data-dir=C:/Users/mouad/AppData/Local/Google/Chrome/User Data")
-        chrome_options.add_argument("--profile-directory=Profile 5")
+        user_data_dir = load_yaml_param(r"config/config.yml", "user-data-dir")
+        chrome_options.add_argument(f"user-data-dir={user_data_dir}")
+        profile_directory = load_yaml_param(r"config/config.yml", "profile-directory")
+        chrome_options.add_argument(f"profile-directory={profile_directory}")
         chrome_options.add_argument("--start-maximized")
         # Create the driver
         self.driver = webdriver.Chrome(service=self.service, options=chrome_options)
-
-    def send_image_to_clipboard(self, image_path):
-        # Get the image from the path
-        image = Image.open(image_path)
-        output = io.BytesIO()
-        image.convert("RGB").save(output, "BMP")
-        data = output.getvalue()[14:]
-        output.close()
-        # Send the image to the clipboard
-        win32clipboard.OpenClipboard()
-        win32clipboard.EmptyClipboard()
-        win32clipboard.SetClipboardData(win32clipboard.CF_DIB, data)
-        win32clipboard.CloseClipboard()
-
-    def wait_for_not_disabled(self, locator):
-        element = self.driver.find_element(locator[0], locator[1])
-        if element.get_attribute("disabled"):
-            return False
-        else:
-            return element
-        
-    def load_prompt_template(self, file_path):
-        with open(file_path, 'r') as file:
-            data = yaml.safe_load(file)
-            return data['prompt_template']
 
     def prompt_image(self, image_path, object):
         # get the size of the image
@@ -58,7 +33,7 @@ class GridVisionClient:
         elif width > 400 and height > 400:
             grid_size = "4x4"
         # Load the prompt template
-        template = self.load_prompt_template(r"config/config.yml")
+        template = load_yaml_param(r"config/config.yml", "prompt-template")
         # Replace the placeholders with the actual values
         prompt = template.format(grid_size=grid_size, object=object)
 
@@ -80,7 +55,7 @@ class GridVisionClient:
         chat_input = self.driver.find_element(By.ID, 'prompt-textarea')
 
         # Copy the image to clipboard
-        self.send_image_to_clipboard(image_path)
+        send_image_to_clipboard(image_path)
 
         # Focus on the input area and paste the image from the clipboard
         input_area.click()
@@ -93,7 +68,7 @@ class GridVisionClient:
         send_button = (By.XPATH, "//button[@data-testid=\"send-button\"]")
         # Wait until the send button is enabled
         send_button = WebDriverWait(self.driver, 30).until(
-            lambda driver: self.wait_for_not_disabled(send_button)
+            lambda driver: wait_for_not_disabled(driver, send_button)
         )
         send_button.click()
 
@@ -107,8 +82,7 @@ class GridVisionClient:
 
         # Split the response into cells
         cells = response.split(',')
-        # Remove text from the cells
-
+        
         return cells
 
     def close(self):
