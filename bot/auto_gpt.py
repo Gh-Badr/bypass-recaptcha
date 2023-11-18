@@ -65,6 +65,17 @@ chrome_options = Options()
 chrome_options.add_argument("--user-data-dir=C:/Users/mouad/AppData/Local/Google/Chrome/User Data")
 chrome_options.add_argument("--profile-directory=Profile 5")
 chrome_options.add_argument("--start-maximized")
+# chrome_options.add_argument("--disable-extensions")
+# chrome_options.add_argument("--proxy-server='direct://'")
+# chrome_options.add_argument("--proxy-bypass-list=*")
+# chrome_options.add_argument('--disable-gpu')
+# chrome_options.add_argument('--disable-dev-shm-usage')
+# chrome_options.add_argument('--no-sandbox')
+# chrome_options.add_argument('--ignore-certificate-errors')
+# chrome_options.add_argument('--allow-running-insecure-content')
+# chrome_options.add_argument('--disable-web-security')
+# chrome_options.add_argument('--window-size=1920,1080')
+# chrome_options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36')
 # chrome_options.add_argument("--headless")
 
 # Start a new Selenium WebDriver with the specified profile
@@ -75,9 +86,9 @@ driver.get("https://chat.openai.com/g/g-K30O0wu7c-grid-vision")
 response = ""
 try:
     # Wait for this xpath 
-    WebDriverWait(driver, 10).until(EC.text_to_be_present_in_element((By.XPATH, '//*[@id="__next"]/div[1]/div[2]/main/div[2]/div[1]/div/div[2]/div[2]/div[1]'), "Grid Vision"))
+    WebDriverWait(driver, 30).until(EC.text_to_be_present_in_element((By.XPATH, '//*[@id="__next"]/div[1]/div[2]/main/div[2]/div[1]/div/div[2]/div[2]/div[1]'), "Grid Vision"))
     # Wait for the input area to be ready
-    input_area = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '#prompt-textarea')))
+    input_area = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, '#prompt-textarea')))
 
     # Find the chat input element and send a message
     chat_input = driver.find_element(By.ID, 'prompt-textarea')
@@ -105,7 +116,7 @@ try:
 
     # Wait for a response to appear
     # To do this we should wait for the aria-label="Stop generating" button to appear and then for the send button to appear again
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//button[@aria-label=\"Stop generating\"]")))
+    WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//button[@aria-label=\"Stop generating\"]")))
     WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//button[@data-testid=\"send-button\"]")))
 
     # Extract the response
