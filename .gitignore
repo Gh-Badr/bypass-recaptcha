@@ -1,6 +1,7 @@
+# Ignore compiled Python files and pycache directories
 *.pyc
 **/__pycache__/
 recaptcha/
+images/
 .env
-/images/
 /prompts/
