@@ -4,3 +4,4 @@ recaptcha/
 .env
 /images/
 /prompts/
+recaptcha-env/
