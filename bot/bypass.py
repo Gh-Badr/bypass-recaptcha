@@ -26,9 +26,27 @@ def bypassing_google_captcha(driver, size, index_imgs):
         # Revenir au document principal
         driver.switch_to.default_content()
 
-        # Basculer vers l'iframe secondaire pour le défi d'images
-        wait.until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, 'iframe[title="Le test reCAPTCHA expire dans deux minutes"]')))
+        # Titres possibles pour l'iframe secondaire
+        titres_iframe = ["Le test reCAPTCHA expire dans deux minutes", "recaptcha challenge expires in two minutes"]
 
+        # Variable pour suivre si l'iframe a été trouvé
+        iframe_trouve = False
+
+        # Essayer de basculer vers l'un des iframes
+        for titre in titres_iframe:
+            try:
+                # Attendre et basculer vers l'iframe si disponible
+                wait.until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, f'iframe[title="{titre}"]')))
+                iframe_trouve = True
+                break  
+            except:
+                # Continuer à essayer avec le prochain titre 
+                continue
+
+        # Vérifier si l'iframe a été trouvé
+        if not iframe_trouve:
+            raise Exception("L'iframe requis n'a pas été trouvé.")
+            
         # Attendre la présence des éléments <tr>
         wait.until(EC.presence_of_all_elements_located((By.TAG_NAME, "tr")))
 
