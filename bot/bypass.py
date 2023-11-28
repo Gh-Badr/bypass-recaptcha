@@ -64,9 +64,6 @@ def bypassing_google_captcha(driver, size, index_imgs):
         verify = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "rc-button-default")))
         verify.click()
 
-        # Attendre une action de l'utilisateur pour continuer
-        input("Appuyez sur une touche pour continuer...")
-
     except Exception as e:
         print("Une erreur est survenue :", e)
 
@@ -74,6 +71,3 @@ def bypassing_google_captcha(driver, size, index_imgs):
         # Garder la session du navigateur ouverte
         print("FIN")
         # driver.quit()  # Décommenter pour fermer le navigateur
-
-# Exécuter la fonction
-bypassing_google_captcha()

@@ -19,19 +19,14 @@ class GridVisionClient:
         chrome_options.add_argument(f"user-data-dir={user_data_dir}")
         profile_directory = load_yaml_param(r"config/config.yml", "profile-directory")
         chrome_options.add_argument(f"profile-directory={profile_directory}")
-        chrome_options.add_argument("--start-maximized")
+        # chrome_options.add_argument("--start-maximized")
         # Create the driver
         self.driver = webdriver.Chrome(service=self.service, options=chrome_options)
 
-    def prompt_image(self, image_path, object):
+    def prompt_image(self, image_path, object, size):
         # get the size of the image
         image = Image.open(image_path)
-        width, height = image.size
-        # Get the grid size
-        if width <= 300 and height <= 300:
-            grid_size = "3x3"
-        elif width > 400 and height > 400:
-            grid_size = "4x4"
+        grid_size = str(size) + 'x' + str(size)
         # Load the prompt template
         template = load_yaml_param(r"config/config.yml", "prompt-template")
         # Replace the placeholders with the actual values
@@ -47,12 +42,9 @@ class GridVisionClient:
         WebDriverWait(self.driver, 30).until(EC.text_to_be_present_in_element((By.XPATH, '//*[@id="__next"]/div[1]/div[2]/main/div[2]/div[1]/div/div[2]/div[2]/div[1]'), "Grid Vision"))
     
 
-    def send_image_and_get_response(self, image_path, object):
+    def send_image_and_get_response(self, image_path, object, size):
         # Wait for the input area to be ready
         input_area = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, '#prompt-textarea')))
-
-        # Find the chat input element and send a message
-        chat_input = self.driver.find_element(By.ID, 'prompt-textarea')
 
         # Copy the image to clipboard
         send_image_to_clipboard(image_path)
@@ -62,7 +54,7 @@ class GridVisionClient:
         input_area.send_keys(Keys.CONTROL, 'v')
 
         # Optionally send some text along with the image
-        input_area.send_keys(self.prompt_image(image_path, object))
+        input_area.send_keys(self.prompt_image(image_path, object, size))
 
         # Send the message
         send_button = (By.XPATH, "//button[@data-testid=\"send-button\"]")

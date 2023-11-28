@@ -38,7 +38,7 @@ def scrape_img_source(url,driver):
 
         # Screenshot the image
         img_element.screenshot("images/image.png")
-        size = img_element.get_attribute('class')
+        size = int(img_element.get_attribute('class')[-1])
         print("Size: ", size)
         print("Object: ", object_name)
 
@@ -47,6 +47,3 @@ def scrape_img_source(url,driver):
     except Exception as e:
         print(e)
         return False
-    finally:
-        # Close the browser
-        driver.quit()

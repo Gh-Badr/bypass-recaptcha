@@ -1,27 +1,47 @@
 from bot.GridVisionClient import GridVisionClient
-import os
-import random
+from bot.utils import load_yaml_param
+from bot.scraper import scrape_img_source
+from bot.bypass import bypassing_google_captcha
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+import yaml
+
+def send_to_gpt(object, size):
+    client = GridVisionClient()
+    client.start_chat()
+    response = client.send_image_and_get_response("images/image.png", object, size)
+    print("GPT-3's response: ", response)
+    client.close()
+    return response
+
 
 def main():
-    client = GridVisionClient()
+    
+
+    url = load_yaml_param("config/config.yml","website_url")
+
     try:
-        client.start_chat()
-        # Get the image - for now, we will just pick a random image from the images folder
-        # TODO: This should be replaced after downloading the images from the recaptcha website
-        image_path = r"images/" + random.choice(os.listdir("images/"))
-        print("Image path: ", image_path)
-        # Get the object - for now, we will just use the image name to get the object
-        # TODO: This part will be replaced by the picked the object from the recaptcha website
-        image_name = os.path.basename(image_path)
-        object = image_name.split("-")[0].replace(".jpg", "")
+
+        # Initialize the Chrome WebDriver
+        service = Service(executable_path=ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=service)
+        
+        # Get the picked the object from the recaptcha website
+        size, object = scrape_img_source(url,driver)
 
         # Send the image and get the response (The response is a list of numbers that represent the grid)
-        response = client.send_image_and_get_response(image_path, object)
-        print("GPT-3's response: ", response)
+        response = send_to_gpt(object, size)
 
+        # Apply GPT response to bypass recaptcha
+        bypassing_google_captcha(driver, size, response)
+
+    except Exception as e:
+        print(e)
+    
     finally:
         input("Press Enter to continue...")
-        client.close()
 
 
 if __name__ == "__main__":
