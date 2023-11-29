@@ -64,6 +64,17 @@ def bypassing_google_captcha(driver, size, index_imgs):
         verify = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "rc-button-default")))
         verify.click()
 
+        # Verifier le changement de style du checkbox
+        driver.switch_to.default_content()
+        iframe = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'iframe[title="reCAPTCHA"]')))
+        driver.switch_to.frame(iframe)
+        checkmark = wait.until(EC.presence_of_element_located((By.CLASS_NAME,"recaptcha-checkbox-checkmark")))
+        print("style")
+        print(checkmark.get_attribute("style"))
+        if checkmark.get_attribute("style"):
+            return True
+        return False
+
     except Exception as e:
         print("Une erreur est survenue :", e)
 

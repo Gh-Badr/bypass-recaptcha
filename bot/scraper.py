@@ -3,8 +3,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-    
-def scrape_img_source(url,driver):
+
+def open_img_frame(url,driver):
 
     try:
         # Open the webpage
@@ -19,10 +19,17 @@ def scrape_img_source(url,driver):
         print("Found checkbox element")
         checkbox.click()
 
-        # Switch to the parent frame
-        driver.switch_to.default_content()
-        print("Switched to parent window")
 
+
+    except Exception as e:
+        print(e)
+    
+def scrape_img_source(driver):
+
+    driver.switch_to.default_content()
+    print("Switched to parent window")
+
+    try:
         # Find the image iframe by its title
         imageIframe = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'iframe[title="Le test reCAPTCHA expire dans deux minutes"]')))
         
