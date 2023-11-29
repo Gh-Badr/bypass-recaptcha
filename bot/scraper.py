@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from bot.utils import move_to_challenge_frame
 
 def open_img_frame(url,driver):
 
@@ -30,13 +31,8 @@ def scrape_img_source(driver):
     print("Switched to parent window")
 
     try:
-        # Find the image iframe by its title
-        imageIframe = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'iframe[title="Le test reCAPTCHA expire dans deux minutes"]')))
-        
-        # switch to image frame
-        print("Found image iframe")
-        driver.switch_to.frame(imageIframe)
-        print("Switched to image iframe")
+        # move to challenge frame
+        move_to_challenge_frame(driver)
 
         # Find the first image
         img_element = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'img')))
