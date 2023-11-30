@@ -9,18 +9,19 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
+client = None
+
 def send_to_gpt(object, size):
-    client = GridVisionClient()
-    client.start_chat()
+    global client
     response = client.send_image_and_get_response("images/image.png", object, size)
     print("GPT-3's response: ", response)
-    client.close()
     return response
 
 
 def main():
-    
 
+    global client
+    
     url = load_yaml_param("config/config.yml","website_url")
 
     try:
@@ -36,6 +37,8 @@ def main():
         size, object = scrape_img_source(driver)
 
         # Send the image and get the response (The response is a list of numbers that represent the grid)
+        client = GridVisionClient()
+        client.start_chat()
         response = send_to_gpt(object, size)
 
         # Apply GPT response to bypass recaptcha
@@ -51,7 +54,7 @@ def main():
             # Apply GPT response to bypass recaptcha
             style = bypassing_google_captcha(driver, size, response)
 
-
+        client.close()
 
     except Exception as e:
         print(e)

@@ -74,6 +74,13 @@ class GridVisionClient:
 
         # Split the response into cells
         cells = response.split(',')
+
+        # Remove text (if it exists) from the cells ( CAN CAUSE PROBLEM )
+        for i in range(len(cells)):
+            for j in range(len(cells[i])):
+                if cells[i][j].isdigit():
+                    cells[i] = cells[i][j]
+                    break
         
         return cells
 

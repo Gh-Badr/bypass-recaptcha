@@ -3,7 +3,7 @@
 website_url: https://mouadfiali.github.io/recaptcha-example/
 
 # Prompt
-prompt-template: "Analyze the provided image, which is segmented into a grid. The grid is either 3x3 or 4x4 in size. For a 3x3 grid, each square contains a distinct image. For a 4x4 grid, the squares collectively form a larger, cohesive image. The actual image is of size {grid_size}. Your task is to identify and list the cell numbers that contain the specified object, denoted as '{object}'. This object may blend in with its surroundings or have similar colors to other elements in the image, necessitating detailed scrutiny. List the cell numbers that contain the object, providing a concise, comma-separated sequence of numbers without additional commentary. Ensure the accuracy of the cell numbers in your response."
+prompt-template: "Analyze the provided image, which is segmented into a grid. The actual image is of size {grid_size}. Your task is to identify and list the cells' numbers that contain '{object}'. This object may blend in with its surroundings or have similar colors to other elements in the image, necessitating detailed scrutiny. List the cells' numbers that contain the object, providing a concise, comma-separated sequence of numbers without additional commentary. Ensure the accuracy of the cell numbers in your response."
 # Add your own chrome user data directory here 
 user-data-dir: C:\Users\lenovo\AppData\Local\Google\Chrome\User Data
 
