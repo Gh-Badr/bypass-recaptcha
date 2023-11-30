@@ -22,6 +22,7 @@ class GridVisionClient:
         # chrome_options.add_argument("--start-maximized")
         # Create the driver
         self.driver = webdriver.Chrome(service=self.service, options=chrome_options)
+        self.conversation_turn = 1
 
     def prompt_image(self, image_path, object, size):
         # get the size of the image
@@ -70,7 +71,8 @@ class GridVisionClient:
         WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, "//button[@data-testid=\"send-button\"]")))
 
         # Extract the response
-        response = self.driver.find_element(By.XPATH, "//div[@data-testid=\"conversation-turn-3\"]//p").text
+        self.conversation_turn += 2
+        response = self.driver.find_element(By.XPATH, "//div[@data-testid=\"conversation-turn-" + str(self.conversation_turn) + "\"]//p").text
 
         # Split the response into cells
         cells = response.split(',')
