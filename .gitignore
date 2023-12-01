@@ -3,6 +3,7 @@
 **/__pycache__/
 recaptcha/
 images/
+old-images/
 .env
 recaptcha-env/
 testbypass/

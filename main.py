@@ -14,7 +14,7 @@ client = None
 def send_to_gpt(object, size):
     global client
     response = client.send_image_and_get_response("images/image.png", object, size)
-    print("GPT-3's response: ", response)
+    print("GPT-4's response: ", response)
     return response
 
 
@@ -29,8 +29,6 @@ def main():
         # Initialize the Chrome WebDriver for recaptcha
         service = Service(executable_path=ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service)
-        
-
 
         # Get the picked the object from the recaptcha website
         open_img_frame(url,driver)

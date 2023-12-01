@@ -10,7 +10,7 @@ def open_img_frame(url,driver):
     try:
         # Open the webpage
         driver.get(url)
-
+        input("Press enter to continue")
         # find element with the css class recaptcha-checkbox-border that is inside an iframe with the title reCAPTCHA
         iframe = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'iframe[title="reCAPTCHA"]')))
         print("Found checkbox iframe element")

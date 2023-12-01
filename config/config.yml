@@ -8,8 +8,8 @@ prompt-template: "Analyze the provided image, which is segmented into a grid. Th
 
 # Add your own chrome user data directory here
 #user-data-dir: !env USER_DATA_DIR
-user-data-dir: C:\Users\lenovo\AppData\Local\Google\Chrome\User Data
+user-data-dir: C:\Users\mouad\AppData\Local\Google\Chrome\User Data
 
 # Add your own profile directory here
 #profile-directory: !env PROFILE_DIR
-profile-directory: Profile 2
+profile-directory: Profile 5
