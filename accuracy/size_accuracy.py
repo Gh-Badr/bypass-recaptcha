@@ -38,7 +38,7 @@ def calculate_accuracy():
             size = int(size_str1)
 
             # Process only if size is 3
-            if size == 4:
+            if size == 3:
                 total_choices += 9  # Total choices for size 3
 
                 # Parse lists
@@ -55,4 +55,4 @@ def calculate_accuracy():
     return accuracy
 
 # Print the calculated accuracy
-print(f"Accuracy: {int(calculate_accuracy()*100)}%")
+print(f"Accuracy for size 3: {int(calculate_accuracy()*100)}%")

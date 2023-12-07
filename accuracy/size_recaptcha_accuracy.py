@@ -3,7 +3,7 @@ import re
 def calculate_accuracy():
     # Initialize counters
     count_above_90_percent = 0
-    count_size_3_rows = 0  # Counter for rows of size 3
+    count_size_4_rows = 0  # Counter for rows of size 4
 
     # Function to parse a line using regex
     def parse_csv_line(line):
@@ -37,10 +37,10 @@ def calculate_accuracy():
             # Convert size to integer
             size = int(size_str1)
 
-            # Process only if size is 3
-            if size == 3:
-                count_size_3_rows += 1  # Increment counter for rows of size 3
-                total_choices = 9  # Total choices for size 3
+            # Process only if size is 4
+            if size == 4:
+                count_size_4_rows += 1  # Increment counter for rows of size 4
+                total_choices = 16  # Total choices for size 4
 
                 # Parse lists
                 correct_answers = parse_list(list_str1)
@@ -48,7 +48,7 @@ def calculate_accuracy():
 
                 # Count True Positives and True Negatives for each row
                 true_positives = len(correct_answers.intersection(student_responses))
-                all_choices = set(range(1, 10))
+                all_choices = set(range(1, 17))
                 true_negatives = len(all_choices - (correct_answers.union(student_responses)))
 
                 # Calculate accuracy for the row
@@ -58,10 +58,10 @@ def calculate_accuracy():
                 if accuracy > 0.9:
                     count_above_90_percent += 1
 
-    return count_above_90_percent, count_size_3_rows
+    return count_above_90_percent, count_size_4_rows
 
 # Get results
-count_above_90, count_size_3 = calculate_accuracy()
-print(f"Number of times accuracy exceeds 90% for size 3 rows: {count_above_90}")
-print(f"Total number of size 3 rows: {count_size_3}")
-print(f"Accuracy for size 3: {int(count_above_90*100/count_size_3)}%")
+count_above_90, count_size_4 = calculate_accuracy()
+print(f"Number of times accuracy exceeds 90% for size 4 rows: {count_above_90}")
+print(f"Total number of size 4 rows: {count_size_4}")
+print(f"Accuracy for size 4: {int(count_above_90*100/count_size_4)}%")
