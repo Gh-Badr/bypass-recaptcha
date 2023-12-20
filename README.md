@@ -12,7 +12,13 @@ This project is a proof of concept showing how AI can be used for malicious purp
 ## Requirements
 - [ChatGPT - Plus](https://openai.com/blog/chatgpt-plus) | This project is using the a custom GPT model created by our team which is [GridVision](https://chat.openai.com/g/g-K30O0wu7c-grid-vision). This model can only be accessed if you have a valid ChatGPT - Plus subscription.
 
-- (Facultative) A virtual environment using. You can create one using
+- Clone this repository and navigate to the project directory using
+``` bash
+git clone
+cd bypass-recaptcha
+```
+
+- (Facultative) Create a virtual environment using
 ``` python
 python -m venv venv
 ```
