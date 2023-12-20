@@ -14,7 +14,7 @@ client = None
 def send_to_gpt(object, size):
     global client
     response = client.send_image_and_get_response("images/image.png", object, size)
-    print("GPT-3's response: ", response)
+    print("GPT-4's response: ", response)
     return response
 
 
