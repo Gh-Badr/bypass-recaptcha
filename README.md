@@ -1,6 +1,14 @@
 # Bypass-reCAPTCHA
 ## Description
-This project is a proof of concept showing how AI can be used for malicious purposes. It uses a custom GPT model to bypass the [Google reCAPTCHA v2](https://www.google.com/recaptcha/about/) challenge (The image selection one). The idea is to use the model to generate a response to the reCAPTCHA challenge and then use the generated response to bypass the reCAPTCHA. 
+This project is a proof of concept showing how AI can be used for malicious purposes. It uses a custom GPT model to bypass the [Google reCAPTCHA v2](https://www.google.com/recaptcha/about/) challenge (The image selection one). The idea is to use the model to generate a response to the reCAPTCHA challenge and then use the generated response to bypass the reCAPTCHA.
+
+## Team Members
+
+- FIALI Mouad
+- GHAZAOUI Badr
+- MAROUANE Kamal
+- RIMAOUI Nabila
+- ZARKTOUNI Ismail
 
 ## Table of Contents
 - [Description](#description)
